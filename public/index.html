@@ -1,1 +1,50 @@
- 
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revisify Note Editor</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-sticky-note"></i> Revisify Note Editor</h1>
+            <p class="subtitle">View and manage your note files</p>
+        </header>
+
+        <div class="main-content">
+            <div class="sidebar">
+                <h3><i class="fas fa-folder"></i> File Explorer</h3>
+                <div class="file-tree" id="fileTree">
+                    <!-- Files will appear here -->
+                </div>
+            </div>
+
+            <div class="editor">
+                <div class="editor-header">
+                    <h2 id="fileName">Select a file</h2>
+                    <div class="file-type" id="fileType">
+                        <!-- File type will appear here -->
+                    </div>
+                </div>
+                
+                <div class="editor-area">
+                    <pre id="fileContent"><code>No file selected. Click on a file in the sidebar to view it.</code></pre>
+                </div>
+                
+                <div class="file-info" id="fileInfo">
+                    <!-- File info will appear here -->
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Revisify &copy; 2024 | <a href="https://github.com/blackwhite237/revisify-note-editor" target="_blank">GitHub Repository</a></p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
