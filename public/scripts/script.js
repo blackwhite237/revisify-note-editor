@@ -11,11 +11,20 @@ const fileIcons = {
 
 // Sample file data (you'll replace this with real file loading)
 const sampleFiles = [
-    { name: 'getting-started.md', path: 'sample-files/notes/getting-started.md', type: '.md' },
-    { name: 'tutorial.md', path: 'sample-files/notes/tutorial.md', type: '.md' },
-    { name: 'example1.rvsf', path: 'sample-files/examples/example1.rvsf', type: '.rvsf' },
-    { name: 'example.js', path: 'sample-files/example.js', type: '.js' },
-    { name: 'example.html', path: 'sample-files/example.html', type: '.html' }
+    { 
+        name: 'Editor', 
+        path: 'editor.html', 
+        type: '.html', 
+        icon: 'fas fa-edit',
+        description: 'Professional note creation suite with advanced formatting tools, subject-based organization, and academic workflow optimization.' 
+    },
+    { 
+        name: 'Viewer', 
+        path: 'viewer.html', 
+        type: '.html', 
+        icon: 'fas fa-eye',
+        description: 'Note presentation interface for reviewing formatted content with proper typography and visual hierarchy.' 
+    }
 ];
 
 // DOM elements
@@ -37,13 +46,31 @@ function loadFileTree() {
         // Get icon
         const iconClass = fileIcons[file.type] || fileIcons.default;
         
+        // Inside loadFileTree function, update the innerHTML:
         fileItem.innerHTML = `
-            <i class="file-icon ${iconClass}"></i>
+            <i class="file-icon ${file.icon}"></i>
             <span class="file-name">${file.name}</span>
         `;
         
         fileItem.addEventListener('click', () => loadFile(file));
         fileTree.appendChild(fileItem);
+
+        // Inside loadFileTree, after creating fileItem, add:
+        fileItem.addEventListener('mouseenter', () => {
+            const descriptionPanel = document.getElementById('currentDescription');
+            descriptionPanel.textContent = file.description || `Hovering: ${file.name}`;
+        });
+
+        fileItem.addEventListener('mouseleave', () => {
+            // Only update if this file is not active
+            if (!fileItem.classList.contains('active')) {
+                const descriptionPanel = document.getElementById('currentDescription');
+                const activeFile = sampleFiles.find(f => 
+                    document.querySelector(`.file-item[data-index="${sampleFiles.indexOf(f)}"]`)?.classList.contains('active')
+                );
+                descriptionPanel.textContent = activeFile ? activeFile.description : 'Select a file to see its description';
+            }
+        });
     });
 }
 
@@ -60,36 +87,53 @@ async function loadFile(file) {
         fileName.textContent = file.name;
         fileType.textContent = file.type.substring(1).toUpperCase() + ' File';
         
-        // Load file content (for now, we'll use placeholder)
-        // In a real app, you'd fetch the actual file
-        const content = await simulateFileLoad(file);
-        
-        // Display content with syntax highlighting
-        fileContent.innerHTML = `<code>${highlightContent(content, file.type)}</code>`;
-        
-        // Show file info
-        fileInfo.innerHTML = `
-            <p><strong>File:</strong> ${file.name}</p>
-            <p><strong>Type:</strong> ${file.type.substring(1)}</p>
-            <p><strong>Path:</strong> ${file.path}</p>
-            <p><strong>Size:</strong> ${content.length} characters</p>
-        `;
+        // If it's an HTML file, load it into an iframe
+        if (file.type === '.html') {
+            // Create an iframe to display the HTML
+            fileContent.innerHTML = `
+                <iframe 
+                    src="${file.path}" 
+                    style="width: 100%; height: 500px; border: none; border-radius: 8px;"
+                    title="${file.name}"
+                ></iframe>
+            `;
+            
+            // Update file info
+            fileInfo.innerHTML = `
+                <p><strong>Page:</strong> ${file.name}</p>
+                <p><strong>File:</strong> ${file.path}</p>
+                <p><strong>Loaded in iframe</strong></p>
+            `;
+        } else {
+            // For other files, show content as before
+            const content = await simulateFileLoad(file);
+            fileContent.innerHTML = `<code>${highlightContent(content, file.type)}</code>`;
+            fileInfo.innerHTML = `
+                <p><strong>File:</strong> ${file.name}</p>
+                <p><strong>Type:</strong> ${file.type.substring(1)}</p>
+                <p><strong>Path:</strong> ${file.path}</p>
+                <p><strong>Size:</strong> ${content.length} characters</p>
+            `;
+        }
+        // Update description panel
+        const descriptionPanel = document.getElementById('currentDescription');
+        if (file.description) {
+            descriptionPanel.textContent = file.description;
+        } else {
+            descriptionPanel.textContent = `${file.name} - ${file.type.substring(1).toUpperCase()} file`;
+        }
         
     } catch (error) {
         fileContent.innerHTML = `<code>Error loading file: ${error.message}</code>`;
         fileInfo.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
     }
 }
-
 // Simulate file loading
 async function simulateFileLoad(file) {
     // This simulates different file contents
-    const contents = {
-        'getting-started.md': `# Getting Started\n\nWelcome to Revisify Note Editor!\n\n## Features\n- File viewer\n- Note editing\n- Markdown support\n- Syntax highlighting\n\n## How to Use\n1. Click files in the sidebar\n2. View content in the editor\n3. Edit files (coming soon)`,
-        'tutorial.md': `# Tutorial\n\nLearn how to use Revisify...\n\n## Basic Navigation\nUse the sidebar to browse files.\n\n## File Types Supported\n- Markdown (.md)\n- JavaScript (.js)\n- HTML (.html)\n- CSS (.css)\n- JSON (.json)\n- Revisify (.rvsf)`,
-        'example1.rvsf': `{\n  "title": "My First Note",\n  "content": "This is a sample note in Revisify format",\n  "created": "2024-01-01",\n  "tags": ["sample", "demo"],\n  "version": "1.0"\n}`,
-        'example.js': `// JavaScript Example\nconsole.log("Hello Revisify!");\n\nfunction greetUser(name) {\n    return \`Hello, \${name}! Welcome to Revisify.\`;\n}\n\n// Example usage\nconst message = greetUser("Developer");\nconsole.log(message);`,
-        'example.html': `<!DOCTYPE html>\n<html lang="en">\n<head>\n    <meta charset="UTF-8">\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n    <title>Example Page</title>\n</head>\n<body>\n    <h1>Welcome to Revisify</h1>\n    <p>This is an example HTML file.</p>\n    \n    <script>\n        console.log("HTML file loaded");\n    </script>\n</body>\n</html>`
+   const contents = {
+        'editor.html': `<!-- Editor page would load here in iframe -->`,
+        'viewer.html': `<!-- Viewer page would load here in iframe -->`
     };
     
     return new Promise((resolve) => {
@@ -131,12 +175,13 @@ function highlightContent(content, fileType) {
 }
 
 // Initialize the app
+// Initialize the app
 document.addEventListener('DOMContentLoaded', () => {
     loadFileTree();
     
-    // Load first file by default
+    // Load Editor by default
     if (sampleFiles.length > 0) {
-        loadFile(sampleFiles[0]);
+        loadFile(sampleFiles[0]); // This will load the Editor
     }
     
     // Add some CSS for syntax highlighting
