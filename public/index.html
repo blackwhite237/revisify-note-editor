@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -15,49 +15,36 @@
         </header>
 
         <div class="main-content">
-          <div class="sidebar">
-              <h3><i class="fas fa-rocket"></i> Revisify Apps</h3>
-              <div class="file-tree">
-                  <div class="file-item" onclick="window.location.href='editor.html'">
-                      <i class="file-icon fas fa-edit"></i>
-                      <span class="file-name">🎨 Editor (Create Notes)</span>
-                  </div>
-                  <div class="file-item" onclick="window.location.href='viewer.html'">
-                      <i class="file-icon fas fa-eye"></i>
-                      <span class="file-name">👁️ Viewer (See Results)</span>
-                  </div>
-              </div>
-          </div>
+            <div class="sidebar">
+                <h3><i class="fas fa-folder"></i> File Explorer</h3>
+                <div class="file-tree" id="fileTree">
+                    <!-- Files will appear here -->
+                </div>
+            </div>
 
-          <div class="editor">
-              <div class="editor-header">
-                  <h2>🚀 Welcome to Revisify!</h2>
-                  <div class="file-type">Dashboard</div>
-              </div>
-              
-              <div class="editor-area">
-                  <h3>Choose Your Weapon:</h3>
-                  <div class="app-options">
-                      <div class="app-card" onclick="window.location.href='editor.html'">
-                          <h4><i class="fas fa-edit"></i> Editor</h4>
-                          <p>Create and edit your school notes here</p>
-                          <button>Launch Editor 🚀</button>
-                      </div>
-                      <div class="app-card" onclick="window.location.href='viewer.html'">
-                          <h4><i class="fas fa-eye"></i> Viewer</h4>
-                          <p>See how your notes look to others</p>
-                          <button>Launch Viewer 👁️</button>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
+            <div class="editor">
+                <div class="editor-header">
+                    <h2 id="fileName">Select a file</h2>
+                    <div class="file-type" id="fileType">
+                        <!-- File type will appear here -->
+                    </div>
+                </div>
+                
+                <div class="editor-area">
+                    <pre id="fileContent"><code>No file selected. Click on a file in the sidebar to view it.</code></pre>
+                </div>
+                
+                <div class="file-info" id="fileInfo">
+                    <!-- File info will appear here -->
+                </div>
+            </div>
+        </div>
 
         <footer>
             <p>Revisify &copy; 2024 | <a href="https://github.com/blackwhite237/revisify-note-editor" target="_blank">GitHub Repository</a></p>
         </footer>
     </div>
 
-    <script src="script.js"></script>
+    <script src="scripts/script.js"></script>
 </body>
 </html>
