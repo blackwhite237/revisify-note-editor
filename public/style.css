@@ -1,0 +1,550 @@
+:root {
+  --primary-color: #1a73e8;
+  --primary-dark: #0d47a1;
+  --secondary-color: #34a853;
+  --accent-color: #fbbc04;
+  --warning-color: #ea4335;
+  --theory-color: #9c27b0;
+  --light-bg: #f8f9fa;
+  --dark-bg: #202124;
+  --border-color: #dadce0;
+  --text-primary: #202124;
+  --text-secondary: #5f6368;
+  --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  --radius: 8px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  color: var(--text-primary);
+  background: var(--light-bg);
+  line-height: 1.6;
+}
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+header {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  color: white;
+  padding: 1rem 2rem;
+  box-shadow: var(--shadow);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+header h1 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Buttons */
+button {
+  background: white;
+  color: var(--primary-color);
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+.btn-primary {
+  background: var(--primary-color);
+  color: white;
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--primary-color);
+}
+
+/* Toolbar */
+.toolbar {
+  background: white;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  position: sticky;
+  top: 70px;
+  z-index: 99;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.toolbar button {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  background: var(--light-bg);
+}
+
+.tool-btn {
+  position: relative;
+}
+
+.tool-btn::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--dark-bg);
+  color: white;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+.tool-btn:hover::after {
+  opacity: 1;
+}
+
+/* Main Content */
+main {
+  flex: 1;
+  display: flex;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 1rem;
+}
+
+/* Split Layout */
+.split {
+  display: flex;
+  flex: 1;
+  gap: 2rem;
+  padding: 2rem 0;
+  height: calc(100vh - 140px);
+}
+
+/* Editor Panel */
+.editor-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.panel-header {
+  padding: 1rem;
+  background: var(--light-bg);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.panel-header h3 {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.stats {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+#editor {
+  flex: 1;
+  padding: 1.5rem;
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', Consolas, monospace;
+  font-size: 15px;
+  line-height: 1.5;
+  border: none;
+  resize: none;
+  outline: none;
+  background: white;
+  color: var(--text-primary);
+  tab-size: 2;
+}
+
+#editor::placeholder {
+  color: #a0a0a0;
+}
+
+/* Preview Panel */
+.preview-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+#preview {
+  flex: 1;
+  padding: 1.5rem;
+  overflow-y: auto;
+  background: white;
+}
+
+/* Viewer Content */
+.viewer-content {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+/* Markdown Styles */
+#preview, #viewer {
+  font-size: 16px;
+}
+
+#preview h1, #viewer h1 {
+  font-size: 2rem;
+  margin: 1.5rem 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--border-color);
+}
+
+#preview h2, #viewer h2 {
+  font-size: 1.5rem;
+  margin: 1.5rem 0 1rem;
+  color: var(--primary-dark);
+}
+
+#preview h3, #viewer h3 {
+  font-size: 1.25rem;
+  margin: 1.25rem 0 0.75rem;
+}
+
+#preview p, #viewer p {
+  margin: 1rem 0;
+}
+
+#preview code, #viewer code {
+  background: var(--light-bg);
+  padding: 0.2rem 0.4rem;
+  border-radius: 3px;
+  font-family: monospace;
+  font-size: 0.9em;
+}
+
+#preview pre, #viewer pre {
+  background: #f6f8fa;
+  padding: 1rem;
+  border-radius: var(--radius);
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+#preview pre code, #viewer pre code {
+  background: none;
+  padding: 0;
+}
+
+#preview blockquote, #viewer blockquote {
+  border-left: 4px solid var(--primary-color);
+  padding-left: 1rem;
+  margin: 1rem 0;
+  color: var(--text-secondary);
+}
+
+/* Tables */
+#preview table, #viewer table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1rem 0;
+}
+
+#preview th, #viewer th,
+#preview td, #viewer td {
+  border: 1px solid var(--border-color);
+  padding: 0.75rem;
+  text-align: left;
+}
+
+#preview th, #viewer th {
+  background: var(--light-bg);
+  font-weight: 600;
+}
+
+/* Custom Blocks */
+.definition, .theory, .note, .formula, .warning {
+  padding: 1.25rem;
+  margin: 1.5rem 0;
+  border-radius: var(--radius);
+  position: relative;
+  border-left-width: 5px;
+  border-left-style: solid;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.definition:hover, .theory:hover, .note:hover, .formula:hover, .warning:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.definition::before, .theory::before, .note::before, .formula::before, .warning::before {
+  position: absolute;
+  top: -10px;
+  left: 1rem;
+  padding: 0 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  border-radius: 10px;
+  text-transform: uppercase;
+}
+
+.definition {
+  border-left-color: #1a73e8;
+  background: linear-gradient(to right, rgba(26, 115, 232, 0.05), rgba(26, 115, 232, 0.02));
+}
+
+.definition::before {
+  content: 'Definition';
+  background: #1a73e8;
+  color: white;
+}
+
+.theory {
+  border-left-color: #9c27b0;
+  background: linear-gradient(to right, rgba(156, 39, 176, 0.05), rgba(156, 39, 176, 0.02));
+}
+
+.theory::before {
+  content: 'Theory';
+  background: #9c27b0;
+  color: white;
+}
+
+.theory h2, .theory h3, .theory h4 {
+  color: #7b1fa2;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.theory ul, .theory ol {
+  margin-left: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+.theory li {
+  margin-bottom: 0.25rem;
+}
+
+.note {
+  border-left-color: #34a853;
+  background: linear-gradient(to right, rgba(52, 168, 83, 0.05), rgba(52, 168, 83, 0.02));
+}
+
+.note::before {
+  content: 'Note';
+  background: #34a853;
+  color: white;
+}
+
+.formula {
+  border-left-color: #fbbc04;
+  background: linear-gradient(to right, rgba(251, 188, 4, 0.05), rgba(251, 188, 4, 0.02));
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.formula::before {
+  content: 'Formula';
+  background: #fbbc04;
+  color: white;
+}
+
+.warning {
+  border-left-color: #ea4335;
+  background: linear-gradient(to right, rgba(234, 67, 53, 0.05), rgba(234, 67, 53, 0.02));
+}
+
+.warning::before {
+  content: 'Warning';
+  background: #ea4335;
+  color: white;
+}
+
+/* Theory-specific elements */
+.theorem {
+  background: linear-gradient(to right, rgba(156, 39, 176, 0.1), rgba(156, 39, 176, 0.05));
+  padding: 1rem;
+  border-radius: 4px;
+  margin: 0.5rem 0;
+}
+
+.proof {
+  background: linear-gradient(to right, rgba(76, 175, 80, 0.1), rgba(76, 175, 80, 0.05));
+  padding: 1rem;
+  border-radius: 4px;
+  margin: 0.5rem 0;
+  border-left: 3px solid #4caf50;
+}
+
+.example {
+  background: linear-gradient(to right, rgba(33, 150, 243, 0.1), rgba(33, 150, 243, 0.05));
+  padding: 1rem;
+  border-radius: 4px;
+  margin: 0.5rem 0;
+  border-left: 3px solid #2196f3;
+}
+
+/* Footer */
+footer {
+  background: var(--light-bg);
+  padding: 1rem 2rem;
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  border-top: 1px solid var(--border-color);
+  margin-top: auto;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .split {
+    flex-direction: column;
+    height: auto;
+  }
+  
+  .editor-panel,
+  .preview-panel {
+    min-height: 400px;
+  }
+  
+  .toolbar {
+    top: 0;
+    position: static;
+    overflow-x: auto;
+  }
+  
+  header {
+    position: static;
+  }
+}
+
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+  
+  .toolbar {
+    justify-content: center;
+  }
+  
+  main {
+    padding: 0 0.5rem;
+  }
+  
+  .viewer-content {
+    padding: 1rem;
+    margin: 1rem;
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Print styles */
+@media print {
+  .toolbar, .panel-header, footer, button {
+    display: none !important;
+  }
+  
+  .split {
+    flex-direction: column;
+    height: auto;
+  }
+  
+  #editor {
+    display: none;
+  }
+  
+  #preview, #viewer {
+    width: 100%;
+    padding: 0;
+    box-shadow: none;
+    border: none;
+  }
+  
+  .definition, .theory, .note, .formula, .warning {
+    break-inside: avoid;
+    border: 1px solid #ddd;
+  }
+}
